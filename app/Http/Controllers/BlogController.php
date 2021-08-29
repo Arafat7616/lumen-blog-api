@@ -19,6 +19,16 @@ class BlogController extends Controller
         ]);
     }
 
+    public function show($id){
+        $blog =  Blog::find($id);
+        return response()->json([
+            'success' => 'true',
+            'message' => '',
+            'code' => '200',
+            'data' => $blog,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -28,6 +38,7 @@ class BlogController extends Controller
 
         $blog = new Blog();
         $blog->title = $request->title;
+        $blog->id = $request->id;
         $blog->description = $request->description;
         try {
             $blog->save();
@@ -40,9 +51,8 @@ class BlogController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => 'false',
-                'message' => 'Something went wrong',
+                'message' => $e->getMessage(),
                 'code' => $e->getCode(),
-                'data' => $e->getMessage(),
             ]);
         }
     }

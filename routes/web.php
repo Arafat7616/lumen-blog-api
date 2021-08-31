@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -17,10 +19,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => '/api/v1'], function () use ($router) {
-    $router->get('/blogs', 'BlogController@index');
+$router->group(['prefix' => '/api/v1', 'middleware' => 'auth'], function () use ($router) {
     $router->post('/blog', 'BlogController@store');
-    $router->get('/blog/{id}', 'BlogController@show');
     $router->put('/blog/{id}', 'BlogController@update');
     $router->delete('/blog/{id}', 'BlogController@destroy');
+    $router->get('/blogs', 'BlogController@index');
+    $router->get('/blog/{id}', 'BlogController@show');
 });
+// $router->group(['prefix' => '/api/v1'], function () use ($router) {
+//     $router->post('/blog', 'BlogController@store');
+//     $router->put('/blog/{id}', 'BlogController@update');
+//     $router->delete('/blog/{id}', 'BlogController@destroy');
+//     $router->get('/blogs', 'BlogController@index');
+//     $router->get('/blog/{id}', 'BlogController@show');
+// });

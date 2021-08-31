@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
@@ -24,6 +26,10 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
+            'password' => app('hash')->make('123456'),
+            'api_token' => Str::random(60),
+            // 'created_at'=> Carbon::now(),
+            // 'updated_at'=> Carbon::now()
         ];
     }
 }

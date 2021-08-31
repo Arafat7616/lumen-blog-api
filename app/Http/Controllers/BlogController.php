@@ -21,12 +21,20 @@ class BlogController extends Controller
 
     public function show($id){
         $blog =  Blog::find($id);
-        return response()->json([
-            'success' => 'true',
-            'message' => '',
-            'code' => '200',
-            'data' => $blog,
-        ]);
+        if($blog){
+            return response()->json([
+                'success' => 'true',
+                'message' => '',
+                'code' => '200',
+                'data' => $blog,
+            ]);
+        }else{
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Data not found',
+                'code' => '404',
+            ]);
+        }
     }
 
     public function store(Request $request)

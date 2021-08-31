@@ -96,4 +96,22 @@ class BlogController extends Controller
             ]);
         }
     }
+
+    public function destroy($id){
+        $blog =  Blog::findOrFail($id);
+        if($blog){
+            $blog->delete();
+            return response()->json([
+                'success' => 'true',
+                'message' => 'Blog deleted successfully',
+                'code' => '200',
+            ]);
+        }else{
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Data not found',
+                'code' => '404',
+            ]);
+        }
+    }
 }

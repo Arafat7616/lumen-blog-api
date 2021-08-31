@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => '/api/v1'], function () use ($router) {
     $router->get('/blogs', 'BlogController@index');
-    $router->post('/blog/store', 'BlogController@store');
+    $router->post('/blog', 'BlogController@store');
     $router->get('/blog/{id}', 'BlogController@show');
+    $router->put('/blog/{id}', 'BlogController@update');
 });

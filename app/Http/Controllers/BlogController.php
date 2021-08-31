@@ -46,7 +46,6 @@ class BlogController extends Controller
 
         $blog = new Blog();
         $blog->title = $request->title;
-        $blog->id = $request->id;
         $blog->description = $request->description;
         try {
             $blog->save();
@@ -61,6 +60,39 @@ class BlogController extends Controller
                 'success' => 'false',
                 'message' => $e->getMessage(),
                 'code' => $e->getCode(),
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id){
+        $this->validate($request, [
+            'title' => 'required|unique:blogs,title,'.$id,
+            'description' => 'required|min:10'
+        ]);
+        $blog =  Blog::find($id);
+        if($blog){
+            $blog->title = $request->title;
+            $blog->description = $request->description;
+            try {
+                $blog->save();
+                return response()->json([
+                    'success' => 'true',
+                    'message' => 'Data update successfully',
+                    'code' => '200',
+                    'data' => $blog,
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'success' => 'false',
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                ]);
+            }
+        }else{
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Data not found',
+                'code' => '404',
             ]);
         }
     }

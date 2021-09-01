@@ -52,9 +52,6 @@ class AuthServiceProvider extends ServiceProvider
         // change the default token expiration
         Passport::tokensExpireIn(Carbon::now()->addDays(15));
 
-        $carbon = new Carbon();
-        $carbon->now
-
         // change the default refresh token expiration
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
     }
